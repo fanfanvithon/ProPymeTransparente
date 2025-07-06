@@ -3,50 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FashionFlow Pyme - Gestión Contable</title>
+    <title>FashionFlow Pyme - Gestión Financiera</title>
     <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="container">
-        <h1>FashionFlow Pyme</h1>
-        <nav>
-            <button onclick="showSection('dashboard')">Dashboard</button>
-            <button onclick="showSection('registroMovimiento')">Registrar Movimiento</button>
-            <button onclick="showSection('registroVenta')">Registrar Venta</button>
-            <button onclick="showSection('registroCompra')">Registrar Compra/Gasto</button>
-            <button onclick="showSection('libroCaja')">Ver Libro de Caja</button>
-            <button onclick="showSection('rcvVentas')">Ver RCV Ventas</button>
-            <button onclick="showSection('rcvCompras')">Ver RCV Compras</button>
-        </nav>
+    <div class="background-gradient"></div> <header class="main-header">
+        <div class="header-content container">
+            <h1>FashionFlow Pyme</h1>
+            <nav class="main-nav">
+                <button onclick="showSection('dashboard')">Dashboard</button>
+                <button onclick="showSection('registroMovimiento')">Registrar Movimiento</button>
+                <button onclick="showSection('registroVenta')">Registrar Venta</button>
+                <button onclick="showSection('registroCompra')">Registrar Compra/Gasto</button>
+                <button onclick="showSection('libroCaja')">Libro de Caja</button>
+                <button onclick="showSection('rcvVentas')">RCV Ventas</button>
+                <button onclick="showSection('rcvCompras')">RCV Compras</button>
+            </nav>
+        </div>
+    </header>
 
-        <section id="dashboard" class="active">
-            <h2>Dashboard</h2>
-            <p>Aquí verás un resumen de tu negocio.</p>
+    <main class="container">
+        <section id="dashboard" class="active card-section">
+            <h2>Dashboard General</h2>
             <div class="summary-cards">
                 <div class="card">
                     <h3>Saldo Actual de Caja</h3>
-                    <p id="saldoCaja">-</p>
+                    <p id="saldoCaja" class="large-text"></p>
                 </div>
                 <div class="card">
-                    <h3>Total Ventas (Mes, Neto)</h3>
-                    <p id="totalVentasMes">-</p>
+                    <h3>Total Ventas Neto (Mes)</h3>
+                    <p id="totalVentasMes" class="large-text"></p>
                 </div>
-                 <div class="card">
+                <div class="card">
                     <h3>Stock Chaquetas</h3>
-                    <p id="stockChaquetas">-</p>
+                    <p id="stockChaquetas" class="large-text"></p>
                 </div>
-                 <div class="card">
+                <div class="card">
                     <h3>Stock Poleras</h3>
-                    <p id="stockPoleras">-</p>
+                    <p id="stockPoleras" class="large-text"></p>
                 </div>
             </div>
-            <h3>Flujo de Caja Mensual (Montos Totales)</h3>
-            <canvas id="cashFlowChart"></canvas>
+            <div class="chart-container card">
+                <h3>Flujo de Caja Mensual (Montos Totales)</h3>
+                <canvas id="cashFlowChart"></canvas>
+            </div>
         </section>
 
-        <section id="registroMovimiento">
+        <section id="registroMovimiento" class="card-section">
             <h2>Registrar Movimiento de Caja (No Afecto a IVA)</h2>
-            <form id="formMovimientoCaja">
+            <form id="formMovimientoCaja" class="form-grid">
                 <label for="movimientoTipo">Tipo:</label>
                 <select id="movimientoTipo" required>
                     <option value="ingreso">Ingreso</option>
@@ -62,20 +68,20 @@
                 <label for="movimientoMedioPago">Medio de Pago:</label>
                 <input type="text" id="movimientoMedioPago" required>
 
-                <label for="movimientoAfectaImpuestos">Afecta Base Imponible (ej. Factura Exenta, no IVA):</label>
-                <input type="checkbox" id="movimientoAfectaImpuestos">
-
-                <label for="movimientoDocTributario">Doc. Tributario Asociado (Opcional):</label>
+                <label for="movimientoAfectaImpuestos" class="checkbox-label">
+                    <input type="checkbox" id="movimientoAfectaImpuestos"> Afecta Base Imponible (Ej: Factura Exenta)
+                </label>
+                <input type="hidden"> <label for="movimientoDocTributario">Doc. Tributario Asociado (Opcional):</label>
                 <input type="text" id="movimientoDocTributario">
 
-                <button type="submit">Registrar</button>
+                <button type="submit" class="full-width">Registrar Movimiento</button>
             </form>
             <div id="movimientoCajaMsg" class="message"></div>
         </section>
 
-        <section id="registroVenta">
+        <section id="registroVenta" class="card-section">
             <h2>Registrar Venta</h2>
-            <form id="formVenta">
+            <form id="formVenta" class="form-grid">
                 <label for="ventaProducto">Producto:</label>
                 <select id="ventaProducto" required>
                     </select>
@@ -84,16 +90,16 @@
                 <input type="number" id="ventaCantidad" min="1" value="1" required>
 
                 <label for="ventaPrecioUnitarioConIVA">Precio Unitario (IVA incluido):</label>
-                <input type="number" id="ventaPrecioUnitarioConIVA" step="0.01" readonly>
+                <input type="number" id="ventaPrecioUnitarioConIVA" step="0.01" readonly class="calculated-field">
 
                 <label for="ventaMontoNeto">Monto Neto Total:</label>
-                <input type="number" id="ventaMontoNeto" step="0.01" readonly>
+                <input type="number" id="ventaMontoNeto" step="0.01" readonly class="calculated-field">
 
                 <label for="ventaIVA">IVA (19%):</label>
-                <input type="number" id="ventaIVA" step="0.01" readonly>
+                <input type="number" id="ventaIVA" step="0.01" readonly class="calculated-field">
 
                 <label for="ventaMontoTotal">Monto Total (IVA incluido):</label>
-                <input type="number" id="ventaMontoTotal" step="0.01" readonly>
+                <input type="number" id="ventaMontoTotal" step="0.01" readonly class="calculated-field">
 
                 <label for="ventaMetodoPago">Método de Pago:</label>
                 <input type="text" id="ventaMetodoPago" required>
@@ -101,21 +107,21 @@
                 <label for="ventaNumDoc">Número Documento (Boleta/Factura):</label>
                 <input type="text" id="ventaNumDoc" required>
 
-                <button type="submit">Registrar Venta</button>
+                <button type="submit" class="full-width">Registrar Venta</button>
             </form>
             <div id="ventaMsg" class="message"></div>
         </section>
 
-        <section id="registroCompra">
+        <section id="registroCompra" class="card-section">
             <h2>Registrar Compra/Gasto</h2>
-            <form id="formCompra">
+            <form id="formCompra" class="form-grid">
                 <label for="compraTipo">Tipo de Compra:</label>
                 <select id="compraTipo" required>
                     <option value="stock">Compra de Stock (Producto)</option>
                     <option value="gasto">Gasto General (Arriendo, Servicios, etc.)</option>
                 </select>
 
-                <div id="compraProductoFields" class="form-group">
+                <input type="hidden"> <div id="compraProductoFields" class="form-group-full">
                     <label for="compraProducto">Producto de Stock:</label>
                     <select id="compraProducto">
                         </select>
@@ -130,111 +136,125 @@
                 <input type="number" id="compraMontoTotal" step="0.01" required>
 
                 <label for="compraMontoNeto">Monto Neto:</label>
-                <input type="number" id="compraMontoNeto" step="0.01" readonly>
+                <input type="number" id="compraMontoNeto" step="0.01" readonly class="calculated-field">
 
                 <label for="compraIVA">IVA (19%):</label>
-                <input type="number" id="compraIVA" step="0.01" readonly>
+                <input type="number" id="compraIVA" step="0.01" readonly class="calculated-field">
 
                 <label for="compraNumDoc">Número Documento (Factura/Boleta):</label>
                 <input type="text" id="compraNumDoc" required>
 
-                <button type="submit">Registrar Compra</button>
+                <button type="submit" class="full-width">Registrar Compra</button>
             </form>
             <div id="compraMsg" class="message"></div>
         </section>
 
-        <section id="libroCaja">
+        <section id="libroCaja" class="card-section">
             <h2>Libro de Caja</h2>
-            <p>Este es tu registro diario de todos los ingresos y egresos (montos totales).</p>
-            <div class="filters">
+            <p class="section-description">Este es tu registro diario de todos los ingresos y egresos (montos totales).</p>
+            <div class="filters card">
                 <label for="filterCajaInicio">Desde:</label>
                 <input type="date" id="filterCajaInicio">
                 <label for="filterCajaFin">Hasta:</label>
                 <input type="date" id="filterCajaFin">
-                <button onclick="loadLibroCaja()">Filtrar</button>
-                <button onclick="exportTableToCSV('tablaLibroCaja', 'libro_caja.csv')">Exportar CSV</button>
+                <button onclick="loadLibroCaja()" class="filter-button">Filtrar</button>
+                <button onclick="exportTableToCSV('tablaLibroCaja', 'libro_caja.csv')" class="export-button">Exportar CSV</button>
             </div>
-            <table id="tablaLibroCaja">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Tipo</th>
-                        <th>Concepto</th>
-                        <th>Monto Total</th>
-                        <th>Medio de Pago</th>
-                        <th>Afecta Impuestos</th>
-                        <th>Doc. Tributario</th>
-                        <th>Saldo Acumulado</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    </tbody>
-            </table>
+            <div class="table-responsive card">
+                <table id="tablaLibroCaja">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Tipo</th>
+                            <th>Concepto</th>
+                            <th>Monto Total</th>
+                            <th>Medio de Pago</th>
+                            <th>Afecta Impuestos</th>
+                            <th>Doc. Tributario</th>
+                            <th>Saldo Acumulado</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
         </section>
 
-        <section id="rcvVentas">
+        <section id="rcvVentas" class="card-section">
             <h2>Registro de Compras y Ventas (RCV) - Ventas</h2>
-            <p>Aquí se listan tus ventas para el cálculo del IVA Débito.</p>
-            <div class="filters">
+            <p class="section-description">Aquí se listan tus ventas para el cálculo del IVA Débito.</p>
+            <div class="filters card">
                 <label for="filterVentasInicio">Desde:</label>
                 <input type="date" id="filterVentasInicio">
                 <label for="filterVentasFin">Hasta:</label>
                 <input type="date" id="filterVentasFin">
-                <button onclick="loadRcvVentas()">Filtrar</button>
-                 <button onclick="exportTableToCSV('tablaRcvVentas', 'rcv_ventas.csv')">Exportar CSV</button>
+                <button onclick="loadRcvVentas()" class="filter-button">Filtrar</button>
+                 <button onclick="exportTableToCSV('tablaRcvVentas', 'rcv_ventas.csv')" class="export-button">Exportar CSV</button>
             </div>
-            <table id="tablaRcvVentas">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Producto</th>
-                        <th>Cantidad</th>
-                        <th>Precio Unitario (IVA Inc.)</th>
-                        <th>Monto Neto Total</th>
-                        <th>IVA (19%)</th>
-                        <th>Monto Total (IVA Inc.)</th>
-                        <th>Método Pago</th>
-                        <th>N° Documento</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    </tbody>
-            </table>
-             <p>Total Neto Ventas (Período): <span id="totalNetoVentas">-</span></p>
-            <p>Total IVA Débito (Período): <span id="totalIVADebito">-</span></p>
+            <div class="table-responsive card">
+                <table id="tablaRcvVentas">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                            <th>Precio Unitario (IVA Inc.)</th>
+                            <th>Monto Neto Total</th>
+                            <th>IVA (19%)</th>
+                            <th>Monto Total (IVA Inc.)</th>
+                            <th>Método Pago</th>
+                            <th>N° Documento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+             <div class="summary-totals card">
+                <p>Total Neto Ventas (Período): <span id="totalNetoVentas" class="large-text"></span></p>
+                <p>Total IVA Débito (Período): <span id="totalIVADebito" class="large-text"></span></p>
+            </div>
         </section>
 
-        <section id="rcvCompras">
+        <section id="rcvCompras" class="card-section">
             <h2>Registro de Compras y Ventas (RCV) - Compras y Gastos</h2>
-            <p>Aquí se listan tus compras y gastos para el cálculo del IVA Crédito.</p>
-            <div class="filters">
+            <p class="section-description">Aquí se listan tus compras y gastos para el cálculo del IVA Crédito.</p>
+            <div class="filters card">
                 <label for="filterComprasInicio">Desde:</label>
                 <input type="date" id="filterComprasInicio">
                 <label for="filterComprasFin">Hasta:</label>
                 <input type="date" id="filterComprasFin">
-                <button onclick="loadRcvCompras()">Filtrar</button>
-                <button onclick="exportTableToCSV('tablaRcvCompras', 'rcv_compras.csv')">Exportar CSV</button>
+                <button onclick="loadRcvCompras()" class="filter-button">Filtrar</button>
+                <button onclick="exportTableToCSV('tablaRcvCompras', 'rcv_compras.csv')" class="export-button">Exportar CSV</button>
             </div>
-            <table id="tablaRcvCompras">
-                <thead>
-                    <tr>
-                        <th>Fecha</th>
-                        <th>Concepto</th>
-                        <th>Producto (si aplica)</th>
-                        <th>Cantidad (si aplica)</th>
-                        <th>Monto Total (IVA Inc.)</th>
-                        <th>Monto Neto</th>
-                        <th>IVA (19%)</th>
-                        <th>N° Documento</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    </tbody>
-            </table>
-            <p>Total Neto Compras/Gastos (Período): <span id="totalNetoCompras">-</span></p>
-            <p>Total IVA Crédito (Período): <span id="totalIVACredito">-</span></p>
+            <div class="table-responsive card">
+                <table id="tablaRcvCompras">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Concepto</th>
+                            <th>Producto (si aplica)</th>
+                            <th>Cantidad (si aplica)</th>
+                            <th>Monto Total (IVA Inc.)</th>
+                            <th>Monto Neto</th>
+                            <th>IVA (19%)</th>
+                            <th>N° Documento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        </tbody>
+                </table>
+            </div>
+            <div class="summary-totals card">
+                <p>Total Neto Compras/Gastos (Período): <span id="totalNetoCompras" class="large-text"></span></p>
+                <p>Total IVA Crédito (Período): <span id="totalIVACredito" class="large-text"></span></p>
+            </div>
         </section>
-    </div>
+    </main>
+
+    <footer class="main-footer">
+        <p>&copy; 2025 FashionFlow Pyme. Todos los derechos reservados.</p>
+    </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="script.js"></script>
