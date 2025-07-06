@@ -535,13 +535,14 @@ async function loadDashboardData() {
         const saldoResponse = await fetch(`${API_URL}?action=get_saldo_caja`);
         if (!saldoResponse.ok) throw new Error(`HTTP error! status: ${saldoResponse.status}`);
         const saldoData = await saldoResponse.json();
-        document.getElementById('saldoCaja').textContent = `$${parseFloat(saldoData.saldo).toLocaleString('es-CL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        // Línea modificada para saldoCaja: ahora sin decimales
+        document.getElementById('saldoCaja').textContent = `$${parseFloat(saldoData.saldo).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 
         const ventasMesResponse = await fetch(`${API_URL}?action=get_total_ventas_mes`);
         if (!ventasMesResponse.ok) throw new Error(`HTTP error! status: ${ventasMesResponse.status}`);
         const ventasMesData = await ventasMesResponse.json();
-        // El total de ventas del mes se muestra neto en el dashboard
-        document.getElementById('totalVentasMes').textContent = `$${parseFloat(ventasMesData.total_ventas_netas).toLocaleString('es-CL', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+        // Línea modificada para totalVentasMes: ahora sin decimales
+        document.getElementById('totalVentasMes').textContent = `$${parseFloat(ventasMesData.total_ventas_netas).toLocaleString('es-CL', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}`;
 
         const stockResponse = await fetch(`${API_URL}?action=get_products`);
         if (!stockResponse.ok) throw new Error(`HTTP error! status: ${stockResponse.status}`);
